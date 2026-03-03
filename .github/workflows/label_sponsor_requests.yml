@@ -1,17 +1,18 @@
----
 name: Label Issues
-on:  # yamllint disable-line rule:truthy
+on:
   issues:
     types:
       - opened
 jobs:
   label_issues_bugs:
-    if: contains(github.event.issue.title,'Bug')
-    runs-on: ubuntu-latest
+    if: github.repository_owner == 'KelvinTegelaar' && contains(github.event.issue.title, 'Bug')
+    runs-on: ubuntu-slim
     permissions:
       issues: write
     steps:
       - name: Sponsor Labels
-        uses: JasonEtco/is-sponsor-label-action@v1.2.0
+        uses: JasonEtco/is-sponsor-label-action@v2.0.0
         with:
-         label: 'Sponsor Request'
+          label: "Sponsor Priority"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
